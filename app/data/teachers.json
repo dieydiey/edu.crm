@@ -10,5 +10,11 @@
     "name": "M. Jean Moreau",
     "email": "jean.moreau@example.com",
     "speciality": "Physique"
+  },
+  {
+    "id": 3,
+    "name": "Aly Tall Niagn",
+    "email": "breukh@gmail.com",
+    "speciality": "FLASk"
   }
 ]
