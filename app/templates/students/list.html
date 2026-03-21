@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Étudiants{% endblock %}
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold">Liste des étudiants</h2>
+        <div class="flex space-x-2">
+            <a href="{{ url_for('students.create') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"><i class="fas fa-plus"></i> Ajouter</a>
+            <form action="{{ url_for('students.search') }}" method="GET" class="flex">
+                <input type="text" name="q" placeholder="Rechercher..." class="px-3 py-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-r hover:bg-indigo-700"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <th class="py-3 px-6 text-left">ID</th>
+                    <th class="py-3 px-6 text-left">Nom</th>
+                    <th class="py-3 px-6 text-left">Email</th>
+                    <th class="py-3 px-6 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-600 text-sm">
+                {% for student in students %}
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">{{ student.id }}</td>
+                    <td class="py-3 px-6 text-left">{{ student.name }}</td>
+                    <td class="py-3 px-6 text-left">{{ student.email }}</td>
+                    <td class="py-3 px-6 text-center">
+                        <a href="{{ url_for('students.edit', id=student.id) }}" class="text-blue-600 hover:underline mr-2"><i class="fas fa-edit"></i> Modifier</a>
+                        <a href="{{ url_for('students.delete', id=student.id) }}" class="text-red-600 hover:underline" onclick="return confirm('Supprimer cet étudiant ?')"><i class="fas fa-trash"></i> Supprimer</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="4" class="py-3 px-6 text-center text-gray-500">Aucun étudiant enregistré.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if total > per_page %}
+    <div class="flex justify-center mt-6">
+        <div class="flex space-x-1">
+            {% for p in range(1, ((total-1)//per_page)+2) %}
+                <a href="{{ url_for('students.list', page=p) }}" class="px-3 py-1 border {% if p == page %}bg-indigo-600 text-white{% else %}bg-white text-indigo-600{% endif %} rounded hover:bg-indigo-100">{{ p }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "title": "Algèbre linéaire",
+    "teacher_id": 1,
+    "student_ids": [1]
+  },
+  {
+    "id": 2,
+    "title": "Mécanique quantique",
+    "teacher_id": 2,
+    "student_ids": [2]
+  }
+]

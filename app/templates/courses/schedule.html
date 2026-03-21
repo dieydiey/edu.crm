@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Planning des cours{% endblock %}
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow">
+    <h2 class="text-2xl font-bold mb-6 text-center">Planning hebdomadaire</h2>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <th class="py-3 px-6 text-left">Cours</th>
+                    <th class="py-3 px-6 text-left">Enseignant</th>
+                    <th class="py-3 px-6 text-left">Jour</th>
+                    <th class="py-3 px-6 text-left">Horaire</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6">{{ course.title }}</td>
+                    <td class="py-3 px-6">{{ course.teacher_name }}</td>
+                    <td class="py-3 px-6">{{ course.schedule.day }}</td>
+                    <td class="py-3 px-6">{{ course.schedule.hour }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="4" class="py-3 px-6 text-center text-gray-500">Aucun cours programmé.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

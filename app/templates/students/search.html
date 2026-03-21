@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Recherche étudiants{% endblock %}
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold">Résultats pour "{{ query }}"</h2>
+        <a href="{{ url_for('students.list') }}" class="text-indigo-600 hover:underline">← Retour à la liste</a>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <th class="py-3 px-6 text-left">ID</th>
+                    <th class="py-3 px-6 text-left">Nom</th>
+                    <th class="py-3 px-6 text-left">Email</th>
+                    <th class="py-3 px-6 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-600 text-sm">
+                {% for student in results %}
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">{{ student.id }}</td>
+                    <td class="py-3 px-6 text-left">{{ student.name }}</td>
+                    <td class="py-3 px-6 text-left">{{ student.email }}</td>
+                    <td class="py-3 px-6 text-center">
+                        <a href="{{ url_for('students.edit', id=student.id) }}" class="text-blue-600 hover:underline mr-2">Modifier</a>
+                        <a href="{{ url_for('students.delete', id=student.id) }}" class="text-red-600 hover:underline" onclick="return confirm('Supprimer ?')">Supprimer</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="4" class="py-3 px-6 text-center text-gray-500">Aucun résultat.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+        <h3 class="text-gray-500 text-sm uppercase">Étudiants</h3>
+        <p class="text-3xl font-bold">{{ total_students }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+        <h3 class="text-gray-500 text-sm uppercase">Enseignants</h3>
+        <p class="text-3xl font-bold">{{ total_teachers }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+        <h3 class="text-gray-500 text-sm uppercase">Cours</h3>
+        <p class="text-3xl font-bold">{{ total_courses }}</p>
+    </div>
+</div>
+
+<div class="bg-white p-6 rounded-lg shadow mb-8">
+    <h2 class="text-xl font-bold mb-4">Étudiants par cours</h2>
+    <canvas id="studentsChart" width="400" height="200"></canvas>
+    <p class="mt-2 text-gray-600">Moyenne : {{ avg_students }} étudiant(s) par cours</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-bold mb-4">Derniers étudiants inscrits</h2>
+        <ul class="divide-y">
+            {% for student in latest_students %}
+            <li class="py-2">{{ student.name }} ({{ student.email }})</li>
+            {% else %}
+            <li>Aucun étudiant</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-bold mb-4">Derniers cours créés</h2>
+        <ul class="divide-y">
+            {% for course in latest_courses %}
+            <li class="py-2">{{ course.title }} - {{ course.teacher_name }}</li>
+            {% else %}
+            <li>Aucun cours</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('studentsChart').getContext('2d');
+    const coursesStats = {{ courses_stats | tojson }};
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: coursesStats.map(c => c.title),
+            datasets: [{
+                label: 'Nombre d\'étudiants',
+                data: coursesStats.map(c => c.students_count),
+                backgroundColor: 'rgba(99, 102, 241, 0.5)',
+                borderColor: 'rgba(99, 102, 241, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

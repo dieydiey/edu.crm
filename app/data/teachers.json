@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Dr. Sophie Leroy",
+    "email": "sophie.leroy@example.com",
+    "speciality": "Mathématiques"
+  },
+  {
+    "id": 2,
+    "name": "M. Jean Moreau",
+    "email": "jean.moreau@example.com",
+    "speciality": "Physique"
+  }
+]

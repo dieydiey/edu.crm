@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Enseignants{% endblock %}
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow">
+    <div class="flex justify-between items-center mb-4 flex-wrap">
+        <h2 class="text-2xl font-bold">Liste des enseignants</h2>
+        <div class="flex space-x-2">
+            <a href="{{ url_for('teachers.create') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"><i class="fas fa-plus"></i> Ajouter</a>
+            <form action="{{ url_for('teachers.search') }}" method="GET" class="flex">
+                <input type="text" name="q" placeholder="Rechercher..." class="px-3 py-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-r hover:bg-indigo-700"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+    <div class="mb-4">
+        <form method="GET" action="{{ url_for('teachers.list') }}" class="flex items-center space-x-2">
+            <label class="text-gray-700">Filtrer par spécialité :</label>
+            <select name="speciality" class="px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <option value="">Toutes</option>
+                {% for spec in all_specialities %}
+                <option value="{{ spec }}" {% if speciality == spec %}selected{% endif %}>{{ spec }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Filtrer</button>
+        </form>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <th class="py-3 px-6 text-left">ID</th>
+                    <th class="py-3 px-6 text-left">Nom</th>
+                    <th class="py-3 px-6 text-left">Email</th>
+                    <th class="py-3 px-6 text-left">Spécialité</th>
+                    <th class="py-3 px-6 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teachers %}
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6">{{ teacher.id }}</td>
+                    <td class="py-3 px-6">{{ teacher.name }}</td>
+                    <td class="py-3 px-6">{{ teacher.email }}</td>
+                    <td class="py-3 px-6">{{ teacher.speciality }}</td>
+                    <td class="py-3 px-6 text-center">
+                        <a href="{{ url_for('teachers.edit', id=teacher.id) }}" class="text-blue-600 hover:underline mr-2">Modifier</a>
+                        <a href="{{ url_for('teachers.delete', id=teacher.id) }}" class="text-red-600 hover:underline" onclick="return confirm('Supprimer cet enseignant ?')">Supprimer</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5" class="py-3 px-6 text-center text-gray-500">Aucun enseignant.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
