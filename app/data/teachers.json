@@ -1,10 +1,10 @@
 [
   {
     "id": 1,
-    "name": "Aly Tall Niang",
-    "email": "aly@gmail.com",
+    "name": "Mansour Diallo",
+    "email": "mansour@gmail.com",
     "specialities": [
-      "Python,Flask,Programmation C,JavaScript"
+      "Anglais"
     ]
   },
   {
@@ -17,10 +17,10 @@
   },
   {
     "id": 3,
-    "name": "Mansour Diallo",
-    "email": "mansour@gmail.com",
+    "name": "Aly Tall Niagn",
+    "email": "aly@gmail.com",
     "specialities": [
-      "Anglais"
+      "Developpemement"
     ]
   }
 ]

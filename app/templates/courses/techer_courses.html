@@ -6,12 +6,22 @@
         <h2 class="text-2xl font-bold text-white">Cours que j'enseigne</h2>
     </div>
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left">Titre</th><th class="px-6 py-3 text-left">Jour</th><th class="px-6 py-3 text-left">Horaire</th><th class="px-6 py-3 text-left">Salle</th><th class="px-6 py-3 text-left">Étudiants</th></tr></thead>
+        <table class="min-w-full divide-y">
+            <thead class="bg-gray-50">
+                <tr><th class="px-6 py-3">Titre</th><th>Classe</th><th>Jour</th><th>Horaire</th><th>Salle</th><th>Statut</th><th>Action</th></tr>
+            </thead>
             <tbody>
-                {% for course in courses %}
-                <tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium">{{ course.title }}</td><td class="px-6 py-4">{{ course.schedule.day }}</td><td class="px-6 py-4">{{ course.schedule.time }}</td><td class="px-6 py-4">{{ course.schedule.room }}</td><td class="px-6 py-4">{{ course.students_names|join(', ') }}</td></tr>
-                {% else %}<tr><td colspan="5" class="px-6 py-4 text-center">Aucun cours</td></tr>{% endfor %}
+                {% for c in courses %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4">{{ c.title }}</td>
+                    <td class="px-6 py-4">{{ c.class_name }}</td>
+                    <td class="px-6 py-4">{{ c.schedule.day }}</td>
+                    <td class="px-6 py-4">{{ c.schedule.time }}</td>
+                    <td class="px-6 py-4">{{ c.schedule.room }}</td>
+                    <td class="px-6 py-4">{% if c.is_canceled %}<span class="badge badge-canceled">Annulé</span>{% else %}<span class="badge badge-active">Actif</span>{% endif %}</td>
+                    <td class="px-6 py-4"><a href="{{ url_for('courses.cancel', id=c.id) }}" class="text-red-600" onclick="return confirm('Annuler ce cours ?')">Annuler</a></td>
+                </tr>
+                {% else %}<tr><td colspan="7" class="text-center">Aucun cours</td></tr>{% endfor %}
             </tbody>
         </table>
     </div>

@@ -17,6 +17,9 @@ def create_app():
     from app.courses import courses_bp
     app.register_blueprint(courses_bp, url_prefix='/courses')
 
+    from app.classes import classes_bp
+    app.register_blueprint(classes_bp, url_prefix='/classes')
+
     from app.dashboard import dashboard_bp
     app.register_blueprint(dashboard_bp)  # pas de préfixe, route racine
 

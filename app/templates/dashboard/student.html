@@ -1,21 +1,35 @@
 {% extends "base.html" %}
-{% block title %}Mon tableau de bord{% endblock %}
+{% block title %}Tableau de bord - Étudiant{% endblock %}
 {% block content %}
-<div class="bg-white rounded-2xl shadow-xl p-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-2">Bonjour, {{ student.name if student else session.user_name }}</h2>
-    <p class="text-gray-600">Votre emploi du temps personnel</p>
-    <hr class="my-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {% for course in courses %}
-        <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-green-500">
-            <h4 class="font-bold">{{ course.title }}</h4>
-            <p><i class="fas fa-chalkboard-user"></i> Enseignant : {{ course.teacher_name }}</p>
-            <p><i class="fas fa-calendar-day"></i> {{ course.schedule.day }} - {{ course.schedule.time }}</p>
-            <p><i class="fas fa-door-open"></i> Salle {{ course.schedule.room }}</p>
+<div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div class="bg-gradient-to-r from-indigo-600 to-indigo-800 px-6 py-8">
+        <div class="flex items-center space-x-4">
+            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-indigo-600 text-2xl">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold text-white">Bonjour, {{ student.name if student else session.user_name }}</h1>
+                <p class="text-indigo-200">Classe : {{ class_name }}</p>
+            </div>
         </div>
-        {% else %}
-        <p class="text-gray-500">Vous n'êtes inscrit à aucun cours.</p>
-        {% endfor %}
+    </div>
+    <div class="p-6">
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Mon emploi du temps</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for course in courses %}
+            <div class="bg-white border rounded-xl p-4 hover:shadow-md transition">
+                <h4 class="text-lg font-semibold">{{ course.title }}</h4>
+                <p class="text-gray-600 text-sm">Enseignant : {{ course.teacher_name }}</p>
+                <p class="text-gray-600 text-sm"><i class="fas fa-calendar-day mr-1"></i> {{ course.schedule.day }} - {{ course.schedule.time }}</p>
+                <p class="text-gray-600 text-sm"><i class="fas fa-door-open mr-1"></i> Salle {{ course.schedule.room }} ({{ course.schedule.mode }})</p>
+                {% if course.is_canceled %}
+                <span class="badge badge-canceled mt-2 inline-block">Cours annulé</span>
+                {% endif %}
+            </div>
+            {% else %}
+            <p class="text-gray-500">Aucun cours pour le moment.</p>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

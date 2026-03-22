@@ -1,17 +1,32 @@
 [
   {
     "id": 1,
-    "name": "Dieynaba BA",
-    "email": "jey@gmail.com"
+    "name": "Ndeye Oumy Ndoye",
+    "email": "princesselebou@gmail.com",
+    "class_id": 1
   },
   {
     "id": 2,
-    "name": "Mame Khary Gueye",
-    "email": "khary@gmail.com"
+    "name": "Dieynaba BA",
+    "email": "diey@gmial.com",
+    "class_id": 1
   },
   {
     "id": 3,
-    "name": "Ndeye Oumy Ndoye",
-    "email": "princesselebou@gmail.com"
+    "name": "Mame Khary Gueye",
+    "email": "khary@gmail.com",
+    "class_id": 1
+  },
+  {
+    "id": 4,
+    "name": "Rosaline Ndour",
+    "email": "rosa@gmail.com",
+    "class_id": null
+  },
+  {
+    "id": 5,
+    "name": "Abdel Niang",
+    "email": "adbdel@gmail.com",
+    "class_id": null
   }
 ]

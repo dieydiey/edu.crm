@@ -8,30 +8,30 @@
   },
   {
     "id": 2,
-    "email": "jey@gmail.com",
-    "password": "dieynababa123",
-    "name": "Dieynaba BA",
-    "role": "student"
-  },
-  {
-    "id": 3,
-    "email": "khary@gmail.com",
-    "password": "mamekharygueye123",
-    "name": "Mame Khary Gueye",
-    "role": "student"
-  },
-  {
-    "id": 4,
     "email": "princesselebou@gmail.com",
     "password": "ndeyeoumyndoye123",
     "name": "Ndeye Oumy Ndoye",
     "role": "student"
   },
   {
+    "id": 3,
+    "email": "diey@gmial.com",
+    "password": "dieynababa123",
+    "name": "Dieynaba BA",
+    "role": "student"
+  },
+  {
+    "id": 4,
+    "email": "khary@gmail.com",
+    "password": "mamekharygueye123",
+    "name": "Mame Khary Gueye",
+    "role": "student"
+  },
+  {
     "id": 5,
-    "email": "aly@gmail.com",
-    "password": "alytallniang123",
-    "name": "Aly Tall Niang",
+    "email": "mansour@gmail.com",
+    "password": "mansourdiallo123",
+    "name": "Mansour Diallo",
     "role": "teacher"
   },
   {
@@ -43,9 +43,23 @@
   },
   {
     "id": 7,
-    "email": "mansour@gmail.com",
-    "password": "mansourdiallo123",
-    "name": "Mansour Diallo",
+    "email": "rosa@gmail.com",
+    "password": "rosalinendour123",
+    "name": "Rosaline Ndour",
+    "role": "student"
+  },
+  {
+    "id": 8,
+    "email": "adbdel@gmail.com",
+    "password": "abdelniang123",
+    "name": "Abdel Niang",
+    "role": "student"
+  },
+  {
+    "id": 9,
+    "email": "aly@gmail.com",
+    "password": "alytallniagn123",
+    "name": "Aly Tall Niagn",
     "role": "teacher"
   }
 ]

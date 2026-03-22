@@ -1,77 +1,28 @@
 [
   {
     "id": 1,
-    "title": "Framework Flask",
+    "title": "Business nglish",
     "teacher_id": 1,
-    "student_ids": [
-      1,
-      2,
-      3
-    ],
+    "class_id": 1,
     "schedule": {
-      "day": null,
-      "time": null,
-      "room": null
-    }
+      "day": "Lundi",
+      "time": "8h-12h",
+      "room": "204",
+      "mode": "Présentiel"
+    },
+    "is_canceled": false
   },
   {
     "id": 2,
-    "title": "Adminstration Windows Server",
-    "teacher_id": 2,
-    "student_ids": [
-      1,
-      2,
-      3
-    ],
-    "schedule": {
-      "day": null,
-      "time": null,
-      "room": null
-    }
-  },
-  {
-    "id": 3,
-    "title": "Administration sous Linux Server",
-    "teacher_id": 2,
-    "student_ids": [
-      1,
-      2,
-      3
-    ],
-    "schedule": {
-      "day": null,
-      "time": null,
-      "room": null
-    }
-  },
-  {
-    "id": 4,
-    "title": "Python POO",
-    "teacher_id": 1,
-    "student_ids": [
-      1,
-      2,
-      3
-    ],
-    "schedule": {
-      "day": null,
-      "time": null,
-      "room": null
-    }
-  },
-  {
-    "id": 5,
     "title": "Business English",
-    "teacher_id": 3,
-    "student_ids": [
-      1,
-      2,
-      3
-    ],
+    "teacher_id": 1,
+    "class_id": 2,
     "schedule": {
-      "day": null,
-      "time": null,
-      "room": null
-    }
+      "day": "Mercredi",
+      "time": "13h-17h",
+      "room": "404",
+      "mode": "Présentiel"
+    },
+    "is_canceled": false
   }
 ]

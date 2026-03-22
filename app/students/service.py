@@ -15,7 +15,7 @@ def add_student(name, email):
         if s['email'] == email:
             return None
     new_id = max([s['id'] for s in students], default=0) + 1
-    student = {'id': new_id, 'name': name, 'email': email}
+    student = {'id': new_id, 'name': name, 'email': email, 'class_id': None}
     students.append(student)
     _save_students(students)
     if not get_user_by_email(email):
