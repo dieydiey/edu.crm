@@ -1,4 +1,5 @@
 from app.data import load_data, save_data
+from app.auth.service import create_user, get_user_by_email
 
 STUDENTS_FILE = 'students.json'
 
@@ -10,10 +11,16 @@ def _save_students(students):
 
 def add_student(name, email):
     students = _load_students()
+    for s in students:
+        if s['email'] == email:
+            return None
     new_id = max([s['id'] for s in students], default=0) + 1
     student = {'id': new_id, 'name': name, 'email': email}
     students.append(student)
     _save_students(students)
+    if not get_user_by_email(email):
+        default_password = name.lower().replace(' ', '') + '123'
+        create_user(email, default_password, name, role='student')
     return student
 
 def list_students():

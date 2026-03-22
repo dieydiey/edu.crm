@@ -2,13 +2,50 @@
   {
     "id": 1,
     "email": "admin@example.com",
-    "password": "adminrk",
-    "name": "Administrateur"
+    "password": "admin123",
+    "name": "Administrateur",
+    "role": "admin"
   },
   {
     "id": 2,
-    "email": "prof@example.com",
-    "password": "prof123",
-    "name": "Professeur"
+    "email": "jey@gmail.com",
+    "password": "dieynababa123",
+    "name": "Dieynaba BA",
+    "role": "student"
+  },
+  {
+    "id": 3,
+    "email": "khary@gmail.com",
+    "password": "mamekharygueye123",
+    "name": "Mame Khary Gueye",
+    "role": "student"
+  },
+  {
+    "id": 4,
+    "email": "princesselebou@gmail.com",
+    "password": "ndeyeoumyndoye123",
+    "name": "Ndeye Oumy Ndoye",
+    "role": "student"
+  },
+  {
+    "id": 5,
+    "email": "aly@gmail.com",
+    "password": "alytallniang123",
+    "name": "Aly Tall Niang",
+    "role": "teacher"
+  },
+  {
+    "id": 6,
+    "email": "mass@gmail.com",
+    "password": "massambalo123",
+    "name": "Massamba Lo",
+    "role": "teacher"
+  },
+  {
+    "id": 7,
+    "email": "mansour@gmail.com",
+    "password": "mansourdiallo123",
+    "name": "Mansour Diallo",
+    "role": "teacher"
   }
 ]

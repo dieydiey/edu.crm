@@ -4,10 +4,11 @@ from app.students.service import (
     add_student, list_students, delete_student, get_student_by_id,
     update_student, search_students
 )
-from app.auth.decorators import login_required
+from app.auth.decorators import login_required, role_required
 
 @students_bp.route('/')
 @login_required
+@role_required('admin')
 def list():
     page = request.args.get('page', 1, type=int)
     per_page = 10
@@ -20,6 +21,7 @@ def list():
 
 @students_bp.route('/search')
 @login_required
+@role_required('admin')
 def search():
     query = request.args.get('q', '')
     if query:
@@ -30,13 +32,17 @@ def search():
 
 @students_bp.route('/create', methods=['GET', 'POST'])
 @login_required
+@role_required('admin')
 def create():
     if request.method == 'POST':
         name = request.form.get('name')
         email = request.form.get('email')
         if name and email:
-            add_student(name, email)
-            flash('Étudiant ajouté avec succès.', 'success')
+            student = add_student(name, email)
+            if student:
+                flash(f'Étudiant ajouté. Un compte a été créé avec le mot de passe : {name.lower().replace(" ", "")}123', 'success')
+            else:
+                flash('Un étudiant avec cet email existe déjà.', 'danger')
             return redirect(url_for('students.list'))
         else:
             flash('Tous les champs sont requis.', 'danger')
@@ -44,6 +50,7 @@ def create():
 
 @students_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
+@role_required('admin')
 def edit(id):
     student = get_student_by_id(id)
     if not student:
@@ -54,6 +61,11 @@ def edit(id):
         email = request.form.get('email')
         if name and email:
             update_student(id, name=name, email=email)
+            # Mettre à jour le compte utilisateur associé
+            from app.auth.service import get_user_by_email, update_user
+            user = get_user_by_email(student['email'])
+            if user:
+                update_user(user['id'], name=name, email=email)
             flash('Étudiant modifié.', 'success')
             return redirect(url_for('students.list'))
         else:
@@ -62,6 +74,7 @@ def edit(id):
 
 @students_bp.route('/delete/<int:id>')
 @login_required
+@role_required('admin')
 def delete(id):
     delete_student(id)
     flash('Étudiant supprimé.', 'info')

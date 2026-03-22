@@ -14,6 +14,7 @@ def login():
             session['user_id'] = user['id']
             session['user_name'] = user['name']
             session['user_email'] = user['email']
+            session['user_role'] = user['role']
             flash(f'Bienvenue {user["name"]} !', 'success')
             return redirect(url_for('dashboard.index'))
         else:

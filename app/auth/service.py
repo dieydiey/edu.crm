@@ -21,10 +21,17 @@ def check_user(email, password):
         return user
     return None
 
-def create_user(email, password, name):
+def create_user(email, password, name, role='student'):
+    """Crée un nouvel utilisateur (admin, teacher, student)."""
     users = _load_users()
     new_id = max([u['id'] for u in users], default=0) + 1
-    user = {'id': new_id, 'email': email, 'password': password, 'name': name}
+    user = {
+        'id': new_id,
+        'email': email,
+        'password': password,
+        'name': name,
+        'role': role
+    }
     users.append(user)
     _save_users(users)
     return user

@@ -1,20 +1,26 @@
 [
   {
     "id": 1,
-    "name": "Dr. Sophie Leroy",
-    "email": "sophie.leroy@example.com",
-    "speciality": "Mathématiques"
+    "name": "Aly Tall Niang",
+    "email": "aly@gmail.com",
+    "specialities": [
+      "Python,Flask,Programmation C,JavaScript"
+    ]
   },
   {
     "id": 2,
-    "name": "M. Jean Moreau",
-    "email": "jean.moreau@example.com",
-    "speciality": "Physique"
+    "name": "Massamba Lo",
+    "email": "mass@gmail.com",
+    "specialities": [
+      "Reseaux"
+    ]
   },
   {
     "id": 3,
-    "name": "Aly Tall Niagn",
-    "email": "breukh@gmail.com",
-    "speciality": "FLASk"
+    "name": "Mansour Diallo",
+    "email": "mansour@gmail.com",
+    "specialities": [
+      "Anglais"
+    ]
   }
 ]

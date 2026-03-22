@@ -4,47 +4,50 @@ from app.teachers.service import (
     add_teacher, list_teachers, delete_teacher, get_teacher_by_id,
     update_teacher, search_teachers, filter_by_speciality
 )
-from app.auth.decorators import login_required
+from app.auth.decorators import login_required, role_required
+from app.auth.service import create_user, get_user_by_email
 
 @teachers_bp.route('/')
 @login_required
+@role_required('admin')   # seul l'admin voit la liste
 def list():
     speciality = request.args.get('speciality', '')
     if speciality:
         teachers = filter_by_speciality(speciality)
     else:
         teachers = list_teachers()
-    # Récupérer toutes les spécialités pour le filtre
-    all_specialities = sorted(set(t['speciality'] for t in list_teachers()))
+    all_specialities = sorted(set(spec for t in list_teachers() for spec in t['specialities']))
     return render_template('teachers/list.html', teachers=teachers, speciality=speciality, all_specialities=all_specialities)
-
-@teachers_bp.route('/search')
-@login_required
-def search():
-    query = request.args.get('q', '')
-    if query:
-        results = search_teachers(query)
-    else:
-        results = []
-    return render_template('teachers/search.html', query=query, results=results)
 
 @teachers_bp.route('/create', methods=['GET', 'POST'])
 @login_required
+@role_required('admin')
 def create():
     if request.method == 'POST':
         name = request.form.get('name')
         email = request.form.get('email')
-        speciality = request.form.get('speciality')
-        if name and email and speciality:
-            add_teacher(name, email, speciality)
-            flash('Enseignant ajouté.', 'success')
-            return redirect(url_for('teachers.list'))
+        specialities = request.form.getlist('specialities')  # champ multi-sélection
+        if not specialities:
+            specialities = request.form.get('speciality', '').split(',')  # fallback
+        specialities = [s.strip() for s in specialities if s.strip()]
+        if name and email and specialities:
+            # Vérifier si un utilisateur existe déjà avec cet email
+            if get_user_by_email(email):
+                flash('Un compte existe déjà avec cet email.', 'danger')
+            else:
+                # Créer le compte enseignant avec un mot de passe par défaut (nom + 123)
+                default_password = name.lower().replace(' ', '') + '123'
+                create_user(email, default_password, name, role='teacher')
+                add_teacher(name, email, specialities)
+                flash(f'Enseignant ajouté. Son mot de passe est : {default_password}', 'success')
+                return redirect(url_for('teachers.list'))
         else:
             flash('Tous les champs sont requis.', 'danger')
     return render_template('teachers/create.html')
 
 @teachers_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
+@role_required('admin')
 def edit(id):
     teacher = get_teacher_by_id(id)
     if not teacher:
@@ -53,9 +56,17 @@ def edit(id):
     if request.method == 'POST':
         name = request.form.get('name')
         email = request.form.get('email')
-        speciality = request.form.get('speciality')
-        if name and email and speciality:
-            update_teacher(id, name=name, email=email, speciality=speciality)
+        specialities = request.form.getlist('specialities')
+        if not specialities:
+            specialities = request.form.get('speciality', '').split(',')
+        specialities = [s.strip() for s in specialities if s.strip()]
+        if name and email and specialities:
+            update_teacher(id, name=name, email=email, specialities=specialities)
+            # Mettre à jour aussi le compte utilisateur correspondant
+            user = get_user_by_email(teacher['email'])
+            if user:
+                from app.auth.service import update_user
+                update_user(user['id'], name=name, email=email)
             flash('Enseignant modifié.', 'success')
             return redirect(url_for('teachers.list'))
         else:
@@ -64,7 +75,30 @@ def edit(id):
 
 @teachers_bp.route('/delete/<int:id>')
 @login_required
+@role_required('admin')
 def delete(id):
-    delete_teacher(id)
-    flash('Enseignant supprimé.', 'info')
+    teacher = get_teacher_by_id(id)
+    if teacher:
+        delete_teacher(id)
+        # Optionnel : supprimer aussi le compte utilisateur
+        user = get_user_by_email(teacher['email'])
+        if user:
+            from app.auth.service import _load_users, _save_users
+            users = _load_users()
+            users = [u for u in users if u['id'] != user['id']]
+            _save_users(users)
+        flash('Enseignant supprimé.', 'info')
+    else:
+        flash('Enseignant introuvable.', 'danger')
     return redirect(url_for('teachers.list'))
+
+@teachers_bp.route('/search')
+@login_required
+@role_required('admin')
+def search():
+    query = request.args.get('q', '')
+    if query:
+        results = search_teachers(query)
+    else:
+        results = []
+    return render_template('teachers/search.html', query=query, results=results)
